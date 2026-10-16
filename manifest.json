@@ -1560,10 +1560,10 @@
   },
   "files": {
     "app.R": {
-      "checksum": "2f17306c4ba7c5410f55e6551aaae906"
+      "checksum": "43f8747945db0feb05974a3ab9f58110"
     },
     "R/funcoes.R": {
-      "checksum": "31946706223c239c522eff6a9222cfee"
+      "checksum": "2a0c37641e7078de0fa269fa0cb8462b"
     }
   },
   "users": null
