@@ -52,7 +52,12 @@ ui <- page_sidebar(
 )
 
 server <- function(input, output, session) {
-  cliente <- chat_google_gemini(system_prompt = prompt_sistema)
+  # Modelo fixo: o padrão do ellmer (o mais novo) costuma dar 503 por alta demanda.
+  # Pode ser trocado pela variável de ambiente GEMINI_MODEL.
+  cliente <- chat_google_gemini(
+    system_prompt = prompt_sistema,
+    model = Sys.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
+  )
   chat_mod_server("chat", cliente)
 
   output$grafico <- renderPlot({

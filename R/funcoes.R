@@ -13,7 +13,16 @@ baixar_sgs <- function(codigo, inicio = "01/01/2000") {
     codigo, inicio
   )
 
-  dados <- jsonlite::fromJSON(url)
+  # A API do SGS às vezes devolve uma página de erro (XML) ou não responde:
+  # tenta até 5 vezes antes de desistir.
+  dados <- NULL
+  for (tentativa in 1:5) {
+    dados <- tryCatch(jsonlite::fromJSON(url), error = function(e) NULL)
+    if (is.data.frame(dados) && nrow(dados) > 0) break
+    dados <- NULL
+    Sys.sleep(2 * tentativa)
+  }
+  if (is.null(dados)) stop("Falha ao baixar a série ", codigo, " da API do BCB.")
 
   data.frame(
     data  = as.Date(dados$data, format = "%d/%m/%Y"),
